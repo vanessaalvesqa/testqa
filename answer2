@@ -1,0 +1,38 @@
+package com.devskiller.selenium;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+
+public class SeleniumExecutor {
+
+	private final WebDriver driver;
+
+	public SeleniumExecutor(WebDriver driver) {
+		this.driver = driver;
+	}
+
+	public Wait<WebDriver> customWait(int timeout, int pollingEvery) {
+		return new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(timeout))
+				.pollingEvery(Duration.ofSeconds(pollingEvery)).ignoring(NoSuchElementException.class);
+	}
+
+	public String extractHeader() {
+		WebElement btn = driver.findElement(By.xpath("//button"));
+		btn.click();
+		WebElement aHef = customWait(10, 2).until((WebDriver dvr) -> dvr.findElement(By.xpath("//h1")));
+		return aHef.getText();
+	}
+
+	public String clickTheButtonAndExtractLink() {
+		WebElement btn = driver.findElement(By.xpath("//button"));
+		btn.click();
+		WebElement aHef = customWait(10, 2).until((WebDriver dvr) -> dvr.findElement(By.xpath("//a")));
+		return aHef.getAttribute("href");
+	}
+}
