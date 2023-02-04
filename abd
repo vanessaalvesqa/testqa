@@ -1,0 +1,24 @@
+package com.devskiller.selenium;
+
+import org.openqa.selenium.WebDriver;
+
+public class SeleniumExecutor {
+
+	String[] cars = { "Volvo", "Fiat", "Opel", "Audi", "BMW", "Toyota" };
+
+	private SeleniumExecutorExtension seleniumExecutorExtension;
+	private final WebDriver driver;
+
+	public SeleniumExecutor(WebDriver driver) {
+		this.driver = driver;
+		this.seleniumExecutorExtension = new SeleniumExecutorExtension(this.driver);
+	}
+
+	public String[] getDropdownValues() {
+		this.seleniumExecutorExtension.setDropdownValues(cars);
+		return cars;
+	}
+
+	public void setInput(String input) {
+	}
+}
